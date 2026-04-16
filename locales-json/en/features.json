@@ -1,7 +1,0 @@
-{
-  "title": "Features",
-  "typeSafety": "Full type-safety for translations",
-  "autoCompletion": "Auto-completion in your IDE",
-  "smallBundle": "Small bundle size",
-  "namespaces": "Namespace support for on-demand loading"
-}
