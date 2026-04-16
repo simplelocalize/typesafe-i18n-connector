@@ -1,6 +1,6 @@
 import type { Translation } from '../i18n-types'
 
 const es = {
-} satisfies Translation
+} as Translation
 
 export default es

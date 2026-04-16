@@ -62,15 +62,13 @@ function AppContent() {
   const { LL, locale, setLocale } = useI18nContext()
   const [loadedNamespaces, setLoadedNamespaces] = useState<Namespaces[]>([])
 
-  const switchLocale = async () => {
-    const currentIndex = locales.indexOf(locale)
-    const nextLocale: Locales = locales[(currentIndex + 1) % locales.length]
-    await loadLocaleAsync(nextLocale)
-    // reload all previously loaded namespaces for the new locale
+  const switchToLocale = async (newLocale: Locales) => {
+    if (newLocale === locale) return
+    await loadLocaleAsync(newLocale)
     for (const ns of loadedNamespaces) {
-      await loadNamespaceAsync(nextLocale, ns)
+      await loadNamespaceAsync(newLocale, ns)
     }
-    setLocale(nextLocale)
+    setLocale(newLocale)
   }
 
   const toggleNamespace = async (ns: Namespaces) => {
@@ -79,7 +77,6 @@ function AppContent() {
     } else {
       await loadNamespaceAsync(locale, ns)
       setLoadedNamespaces((prev) => [...prev, ns])
-      // re-trigger reactivity
       setLocale(locale)
     }
   }
@@ -91,13 +88,28 @@ function AppContent() {
       <p>{LL.currentLanguage({ locale })}</p>
       <p>{LL.namespacesLoaded({ namespaces: loadedNamespaces.length > 0 ? loadedNamespaces.join(', ') : '(none)' })}</p>
 
+      <div style={{ marginBottom: '1rem' }}>
+        <p><strong>{LL.switchLanguage()}</strong></p>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {locales.map((l) => (
+            <button
+              key={l}
+              onClick={() => switchToLocale(l)}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                background: l === locale ? '#e0e0ff' : undefined,
+                fontWeight: l === locale ? 'bold' : 'normal',
+              }}
+            >
+              {localeLabels[l]}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-        <button
-          onClick={switchLocale}
-          style={{ padding: '0.5rem 1rem', fontSize: '1rem', cursor: 'pointer' }}
-        >
-          {LL.switchLanguage()}
-        </button>
         {allNamespaces.map((ns) => (
           <button
             key={ns}
