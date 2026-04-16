@@ -26,6 +26,7 @@ await exportTranslations()
 await exportTranslations({
   outputDir: './my-translations',
   defaultNamespace: 'common',
+  cleanOutputDir: false,
 })
 ```
 
@@ -50,10 +51,11 @@ await importTranslations({
 
 ### `ExportOptions`
 
-| Option             | Type     | Default          | Description                                            |
-| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
-| `outputDir`        | `string` | `./locales-json` | Directory to write exported JSON files to              |
-| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
+| Option             | Type      | Default          | Description                                            |
+| ------------------ | --------- | ---------------- | ------------------------------------------------------ |
+| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to              |
+| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting               |
+| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations |
 
 ### `ImportOptions`
 
@@ -79,6 +81,8 @@ locales-json/
 └── ...
 ```
 
+Exported files are compatible with the [Single Language JSON](https://simplelocalize.io/docs/file-formats/single-language-json/) file format used by SimpleLocalize.
+
 Each JSON file contains flat key-value pairs:
 
 ```json
@@ -101,7 +105,7 @@ Nested typesafe-i18n keys are flattened with dots:
 
 After exporting translations, use the [SimpleLocalize CLI](https://simplelocalize.io/docs/cli/get-started/) to upload and download translations.
 
-Example `simplelocalize.yml`:
+See [`example/simplelocalize.yml`](example/simplelocalize.yml) for a working configuration. Example `simplelocalize.yml`:
 
 ```yaml
 uploadLanguageKey: en
