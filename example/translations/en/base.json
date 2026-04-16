@@ -1,0 +1,17 @@
+{
+  "currentLanguage": "Current language: {locale:string}",
+  "greeting": "Hello {name:string}!",
+  "loadNamespace": "Load \"{namespace:string}\" namespace",
+  "namespacesLoaded": "Loaded namespaces: {namespaces:string}",
+  "switchLanguage": "Switch language",
+  "welcome": "Welcome to the typesafe-i18n React sample app.",
+  "counter.count": "Count: {count:number}",
+  "counter.decrement": "Decrement",
+  "counter.increment": "Increment",
+  "counter.title": "Counter",
+  "features.autoCompletion": "Auto-completion in your IDE",
+  "features.namespaces": "Namespace support for on-demand loading",
+  "features.smallBundle": "Small bundle size",
+  "features.title": "Features",
+  "features.typeSafety": "Full type-safety for translations"
+}

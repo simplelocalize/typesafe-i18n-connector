@@ -1,0 +1,7 @@
+{
+  "autoCompletion": "Automatyczne uzupełnianie w Twoim środowisku IDE",
+  "namespaces": "Obsługa przestrzeni nazw dla ładowania na żądanie",
+  "smallBundle": "Mały rozmiar pakietu",
+  "title": "Cechy",
+  "typeSafety": "Pełne bezpieczeństwo typów dla tłumaczeń"
+}

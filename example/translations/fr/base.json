@@ -1,0 +1,17 @@
+{
+  "currentLanguage": "Langue actuelle : {locale}",
+  "greeting": "Bonjour {name}!",
+  "loadNamespace": "Charger l'espace de noms \"{namespace}\"",
+  "namespacesLoaded": "Espaces de noms chargés : {namespaces}",
+  "switchLanguage": "Changer de langue",
+  "welcome": "Bienvenue dans l'application exemple React typesafe-i18n.",
+  "counter.count": "Compter: {count}",
+  "counter.decrement": "Décrément",
+  "counter.increment": "Incrément",
+  "counter.title": "Comptoir",
+  "features.autoCompletion": "Saisie semi-automatique dans votre IDE",
+  "features.namespaces": "Prise en charge des espaces de noms pour le chargement à la demande",
+  "features.smallBundle": "petit paquet",
+  "features.title": "Caractéristiques",
+  "features.typeSafety": "Sécurité totale des types pour les traductions"
+}

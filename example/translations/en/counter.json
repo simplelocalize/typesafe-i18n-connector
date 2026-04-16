@@ -1,0 +1,6 @@
+{
+  "count": "Count: {count:number}",
+  "decrement": "Decrement",
+  "increment": "Increment",
+  "title": "Counter"
+}

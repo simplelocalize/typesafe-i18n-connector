@@ -1,0 +1,17 @@
+{
+  "currentLanguage": "Idioma atual: {locale}",
+  "greeting": "Olá {name}!",
+  "loadNamespace": "Carregar namespace \"{namespace}\"",
+  "namespacesLoaded": "Namespaces carregados: {namespaces}",
+  "switchLanguage": "Alterar idioma",
+  "welcome": "Bem-vindo ao aplicativo de exemplo React com typesafe-i18n.",
+  "counter.count": "Contar: {count}",
+  "counter.decrement": "Diminuição",
+  "counter.increment": "Incremento",
+  "counter.title": "Contador",
+  "features.autoCompletion": "Autocompletar no seu IDE",
+  "features.namespaces": "Suporte a namespaces para carregamento sob demanda",
+  "features.smallBundle": "Tamanho do pacote pequeno",
+  "features.title": "Características",
+  "features.typeSafety": "Segurança total de tipos para traduções"
+}
