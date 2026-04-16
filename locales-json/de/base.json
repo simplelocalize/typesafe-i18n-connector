@@ -1,0 +1,17 @@
+{
+  "greeting": "Hallo {name}!",
+  "welcome": "Willkommen bei der typesafe-i18n React-Beispielanwendung.",
+  "currentLanguage": "Aktuelle Sprache: {locale}",
+  "switchLanguage": "Sprache wechseln",
+  "namespacesLoaded": "Geladene Namespaces: {namespaces}",
+  "loadNamespace": "Namespace \"{namespace}\" laden",
+  "counter.title": "Zähler",
+  "counter.count": "Zählerstand: {count}",
+  "counter.increment": "Erhöhen",
+  "counter.decrement": "Verringern",
+  "features.title": "Funktionen",
+  "features.typeSafety": "Volle Typsicherheit für Übersetzungen",
+  "features.autoCompletion": "Auto-Vervollständigung in deiner IDE",
+  "features.smallBundle": "Kleine Bundle-Größe",
+  "features.namespaces": "Namespace-Unterstützung für bedarfsgerechtes Laden"
+}
