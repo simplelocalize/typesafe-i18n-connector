@@ -13,3 +13,10 @@ downloadFormat: single-language-json
 downloadPath: ./locales-json/{lang}/{ns}.json
 downloadOptions:
   - EXCLUDE_DEPRECATED_KEYS # excludes keys that are marked as deprecated
+
+
+# Upload translations to SimpleLocalize:
+# simplelocalize upload --apiKey $SIMPLELOCALIZE_API_KEY 
+
+# Download translations from SimpleLocalize:
+# simplelocalize download --apiKey $SIMPLELOCALIZE_API_KEY
