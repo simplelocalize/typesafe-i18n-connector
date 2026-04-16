@@ -50,17 +50,17 @@ await importTranslations({
 
 ### `ExportOptions`
 
-| Option             | Type     | Default              | Description                                          |
-|--------------------|----------|----------------------|------------------------------------------------------|
-| `outputDir`        | `string` | `./locales-json`     | Directory to write exported JSON files to             |
-| `defaultNamespace` | `string` | `base`               | Filename (without `.json`) for root-level translations |
+| Option             | Type     | Default          | Description                                            |
+| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
+| `outputDir`        | `string` | `./locales-json` | Directory to write exported JSON files to              |
+| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
 
 ### `ImportOptions`
 
-| Option             | Type     | Default              | Description                                          |
-|--------------------|----------|----------------------|------------------------------------------------------|
-| `inputDir`         | `string` | `./locales-json`     | Directory to read JSON files from                     |
-| `defaultNamespace` | `string` | `base`               | Filename (without `.json`) for root-level translations |
+| Option             | Type     | Default          | Description                                            |
+| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
+| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                      |
+| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
 
 ## File structure
 

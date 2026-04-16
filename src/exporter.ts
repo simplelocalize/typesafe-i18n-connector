@@ -2,7 +2,7 @@ import { readTranslationsFromDisk, type ExportLocaleMapping } from 'typesafe-i18
 import { writeFileSync, mkdirSync, rmSync } from 'fs'
 import { join } from 'path'
 
-const flattenTranslations = (
+export const flattenTranslations = (
   obj: Record<string, unknown>,
   prefix = '',
 ): Record<string, string> => {
