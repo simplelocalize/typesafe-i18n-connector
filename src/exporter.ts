@@ -1,11 +1,51 @@
-import { readTranslationsFromDisk, type ExportLocaleMapping } from 'typesafe-i18n/exporter'
+import { readTranslationsFromDisk } from 'typesafe-i18n/exporter'
 import { writeFileSync, mkdirSync, rmSync } from 'fs'
 import { join } from 'path'
 
-export const flattenTranslations = (
+export interface ExportOptions {
+  outputDir?: string // default: './locales-json'
+  cleanOutputDir?: boolean // default: true
+  defaultNamespace?: string // 'base'
+}
+
+export const exportTranslations = async (options?: ExportOptions) => {
+  const outputDir = options?.outputDir ?? join(process.cwd(), 'locales-json')
+  const defaultNamespace = options?.defaultNamespace ?? 'base'
+  const cleanOutputDir = options?.cleanOutputDir ?? true
+  const mappings = await readTranslationsFromDisk()
+
+  if (cleanOutputDir) {
+    rmSync(outputDir, { recursive: true, force: true })
+  }
+
+  for (const { locale, translations, namespaces } of mappings) {
+    const localeDir = join(outputDir, locale)
+    mkdirSync(localeDir, { recursive: true })
+
+    writeJsonFile(join(localeDir, `${defaultNamespace}.json`), translations)
+    console.log(`exported '${locale}/${defaultNamespace}.json'`)
+
+    for (const ns of namespaces) {
+      const nsTranslations = (translations as Record<string, unknown>)[ns]
+      if (nsTranslations && typeof nsTranslations === 'object') {
+        writeJsonFile(join(localeDir, `${ns}.json`), nsTranslations)
+        console.log(`exported '${locale}/${ns}.json'`)
+      }
+    }
+  }
+
+  console.log('export completed')
+}
+
+function writeJsonFile(filePath: string, obj: unknown) {
+  const flat = flattenTranslations(obj as Record<string, unknown>)
+  writeFileSync(filePath, JSON.stringify(flat, null, 2) + '\n')
+}
+
+export function flattenTranslations(
   obj: Record<string, unknown>,
   prefix = '',
-): Record<string, string> => {
+): Record<string, string> {
   const result: Record<string, string> = {}
   for (const [key, value] of Object.entries(obj)) {
     const fullKey = prefix ? `${prefix}.${key}` : key
@@ -16,41 +56,4 @@ export const flattenTranslations = (
     }
   }
   return result
-}
-
-export interface ExportOptions {
-  outputDir?: string
-  defaultNamespace?: string
-}
-
-export const exportTranslations = async (options?: ExportOptions) => {
-  const outputDir = options?.outputDir ?? join(process.cwd(), 'locales-json')
-  const defaultNamespace = options?.defaultNamespace ?? 'base'
-  const mappings: ExportLocaleMapping[] = await readTranslationsFromDisk()
-
-  rmSync(outputDir, { recursive: true, force: true })
-
-  for (const mapping of mappings) {
-    const localeDir = join(outputDir, mapping.locale)
-    mkdirSync(localeDir, { recursive: true })
-
-    // Export base translations
-    const flat = flattenTranslations(mapping.translations as Record<string, unknown>)
-    const filePath = join(localeDir, `${defaultNamespace}.json`)
-    writeFileSync(filePath, JSON.stringify(flat, null, 2) + '\n')
-    console.log(`exported locale '${mapping.locale}' to ${filePath}`)
-
-    // Export namespace translations
-    for (const ns of mapping.namespaces) {
-      const nsTranslations = (mapping.translations as Record<string, unknown>)[ns]
-      if (nsTranslations && typeof nsTranslations === 'object') {
-        const nsFlat = flattenTranslations(nsTranslations as Record<string, unknown>)
-        const nsFilePath = join(localeDir, `${ns}.json`)
-        writeFileSync(nsFilePath, JSON.stringify(nsFlat, null, 2) + '\n')
-        console.log(`exported namespace '${ns}' for locale '${mapping.locale}' to ${nsFilePath}`)
-      }
-    }
-  }
-
-  console.log('export completed')
 }

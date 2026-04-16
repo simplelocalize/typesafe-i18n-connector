@@ -1,13 +1,15 @@
+# Docs: https://simplelocalize.io/docs/cli/get-started/
+
 uploadLanguageKey: en
 uploadFormat: single-language-json
 uploadPath: ./locales-json/en/{ns}.json
 uploadOptions: 
-  - REPLACE_TRANSLATION_IF_FOUND
-  - ACTIVATE_PRESENT_KEYS
-  - DEPRECATE_NOT_PRESENT_KEYS
-  - MARK_AS_ACCEPTED
+  - REPLACE_TRANSLATION_IF_FOUND # updates existing translations with the same key
+  - ACTIVATE_PRESENT_KEYS # activates all keys present in the uploaded file, even if they were previously deactivated
+  - DEPRECATE_NOT_PRESENT_KEYS # deprecates keys that are not present in the uploaded file, but only if they were previously active
+  - MARK_AS_ACCEPTED # marks uploaded translations as accepted
 
 downloadFormat: single-language-json
 downloadPath: ./locales-json/{lang}/{ns}.json
 downloadOptions:
-  - EXCLUDE_DEPRECATED_KEYS
+  - EXCLUDE_DEPRECATED_KEYS # excludes keys that are marked as deprecated
