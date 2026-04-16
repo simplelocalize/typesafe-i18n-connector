@@ -1,6 +1,6 @@
 {
   "name": "@simplelocalize/typesafe-i18n-connector",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Import and export typesafe-i18n translations to/from flat JSON files compatible with SimpleLocalize",
   "type": "module",
   "main": "./dist/index.js",
