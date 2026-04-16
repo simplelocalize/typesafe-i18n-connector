@@ -21,13 +21,6 @@ import { exportTranslations } from '@simplelocalize/typesafe-i18n-connector'
 
 // Use defaults (outputs to ./locales-json/)
 await exportTranslations()
-
-// Or customize
-await exportTranslations({
-  outputDir: './my-translations',
-  defaultNamespace: 'common',
-  cleanOutputDir: false,
-})
 ```
 
 ### Import translations
@@ -39,33 +32,24 @@ import { importTranslations } from '@simplelocalize/typesafe-i18n-connector'
 
 // Use defaults (reads from ./locales-json/)
 await importTranslations()
-
-// Or customize
-await importTranslations({
-  inputDir: './my-translations',
-  defaultNamespace: 'common',
-})
 ```
 
-## Options
+### Add to `package.json`
 
-### `ExportOptions`
+You can paste both codes into `scripts/exporter.ts` and `scripts/importer.ts` and and add import + export scripts:
 
-| Option             | Type      | Default          | Description                                            |
-| ------------------ | --------- | ---------------- | ------------------------------------------------------ |
-| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to              |
-| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting               |
-| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations |
+```json
+    "scripts": {
+        ...
+        "i18n:export": "tsx scripts/exporter.ts",
+        "i18n:import": "tsx scripts/importer.ts"
+    },
+```
 
-### `ImportOptions`
+To automate the process by simply running `npm run i18n:export` or `npm run i18n:import`
 
-| Option             | Type     | Default          | Description                                            |
-| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
-| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                      |
-| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
 
 ## File structure
-
 The connector reads and writes flat JSON files organized by locale and namespace:
 
 ```
@@ -101,6 +85,7 @@ Nested typesafe-i18n keys are flattened with dots:
 }
 ```
 
+
 ## SimpleLocalize integration
 
 After exporting translations, use the [SimpleLocalize CLI](https://simplelocalize.io/docs/cli/get-started/) to upload and download translations.
@@ -127,16 +112,16 @@ Workflow:
 
 ```bash
 # 1. Export typesafe-i18n translations to JSON
-npx tsx scripts/export.ts
+npm run i18n:export
 
 # 2. Upload to SimpleLocalize
-simplelocalize upload
+simplelocalize upload --apiKey YOUR_API_KEY
 
 # 3. Download translations from SimpleLocalize
-simplelocalize download
+simplelocalize download --apiKey YOUR_API_KEY
 
 # 4. Import JSON back into typesafe-i18n
-npx tsx scripts/import.ts
+npm run i18n:import
 ```
 
 ## Example
@@ -154,6 +139,44 @@ cd example
 npm install
 npm run dev
 ```
+
+
+## Customization
+
+### Export options
+
+You can customize export function like this:
+
+```ts
+await exportTranslations({
+  outputDir: './my-translations',
+  defaultNamespace: 'common',
+  cleanOutputDir: false,
+})
+```
+
+| Option             | Type      | Default          | Description                                            |
+| ------------------ | --------- | ---------------- | ------------------------------------------------------ |
+| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to              |
+| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting               |
+| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations |
+
+### Import options
+
+You can customize import function like this:
+
+```ts
+await importTranslations({
+  inputDir: './my-translations',
+  defaultNamespace: 'common',
+})
+```
+
+| Option             | Type     | Default          | Description                                            |
+| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
+| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                      |
+| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
+
 
 ## License
 
