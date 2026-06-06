@@ -149,6 +149,39 @@ describe('exportTranslations', () => {
     expect(existsSync(join(tmpDir, 'en', 'base.json'))).toBe(false)
   })
 
+  it('writes nested JSON when flatten is false', async () => {
+    mockReadTranslations.mockResolvedValue([
+      {
+        locale: 'en',
+        translations: {
+          greeting: 'Hello',
+          counter: {
+            count: 'Count: {count:number}',
+            increment: 'Increment',
+          },
+        },
+        namespaces: ['counter'],
+      },
+    ])
+
+    await exportTranslations({ outputDir: tmpDir, flatten: false })
+
+    const enBase = JSON.parse(readFileSync(join(tmpDir, 'en', 'base.json'), 'utf-8'))
+    expect(enBase).toEqual({
+      greeting: 'Hello',
+      counter: {
+        count: 'Count: {count:number}',
+        increment: 'Increment',
+      },
+    })
+
+    const enCounter = JSON.parse(readFileSync(join(tmpDir, 'en', 'counter.json'), 'utf-8'))
+    expect(enCounter).toEqual({
+      count: 'Count: {count:number}',
+      increment: 'Increment',
+    })
+  })
+
   it('clears the output directory before exporting', async () => {
     mockReadTranslations.mockResolvedValue([
       {
