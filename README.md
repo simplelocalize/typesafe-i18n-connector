@@ -48,8 +48,8 @@ You can paste both codes into `scripts/exporter.ts` and `scripts/importer.ts` an
 
 To automate the process by simply running `npm run i18n:export` or `npm run i18n:import`
 
-
 ## File structure
+
 The connector reads and writes flat JSON files organized by locale and namespace:
 
 ```
@@ -84,7 +84,6 @@ Nested typesafe-i18n keys are flattened with dots:
   "section.description": "A description"
 }
 ```
-
 
 ## SimpleLocalize integration
 
@@ -140,7 +139,6 @@ npm install
 npm run dev
 ```
 
-
 ## Customization
 
 ### Export options
@@ -176,7 +174,6 @@ await importTranslations({
 | ------------------ | -------- | ---------------- | ------------------------------------------------------ |
 | `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                      |
 | `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
-
 
 ## License
 
