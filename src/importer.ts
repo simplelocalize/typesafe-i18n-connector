@@ -6,15 +6,23 @@ import { join, basename } from 'path'
 export interface ImportOptions {
   inputDir?: string // default: './locales-json'
   defaultNamespace?: string // 'base'
+  baseLocale?: string // default: 'en'
 }
 
 export const importTranslations = async (options?: ImportOptions) => {
   const inputDir = options?.inputDir ?? join(process.cwd(), 'locales-json')
   const defaultNamespace = options?.defaultNamespace ?? 'base'
+  const baseLocale = options?.baseLocale ?? 'en'
 
   const locales = readdirSync(inputDir, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
+    // Process the base locale first. typesafe-i18n's storeTranslationsToDisk only
+    // learns the namespace list once it reaches the base locale, and writes each
+    // locale's namespace files from it. Any locale processed before the base (e.g.
+    // 'de' < 'en' in readdir/alphabetical order) would otherwise have its namespace
+    // files silently skipped.
+    .sort((a, b) => (a === baseLocale ? -1 : b === baseLocale ? 1 : a.localeCompare(b)))
 
   const mappings: ImportLocaleMapping[] = locales.map((locale) =>
     readLocale(join(inputDir, locale), locale, defaultNamespace),

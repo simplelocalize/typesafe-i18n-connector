@@ -133,6 +133,33 @@ describe('importTranslations', () => {
     expect(locales).toEqual(['de', 'en'])
   })
 
+  it('processes the base locale first, even when others sort before it', async () => {
+    mockStore.mockResolvedValue(['en', 'de', 'fr'])
+
+    // 'de' sorts before 'en' alphabetically; without base-first ordering
+    // typesafe-i18n would skip 'de' namespace files.
+    writeLocale('de', 'base.json', { hello: 'Hallo' })
+    writeLocale('en', 'base.json', { hello: 'Hello' })
+    writeLocale('fr', 'base.json', { hello: 'Bonjour' })
+
+    await importTranslations({ inputDir: tmpDir })
+
+    const mappings = mockStore.mock.calls[0][0] as Array<{ locale: string }>
+    expect(mappings.map((m) => m.locale)).toEqual(['en', 'de', 'fr'])
+  })
+
+  it('honors a custom baseLocale for ordering', async () => {
+    mockStore.mockResolvedValue(['de', 'en'])
+
+    writeLocale('de', 'base.json', { hello: 'Hallo' })
+    writeLocale('en', 'base.json', { hello: 'Hello' })
+
+    await importTranslations({ inputDir: tmpDir, baseLocale: 'de' })
+
+    const mappings = mockStore.mock.calls[0][0] as Array<{ locale: string }>
+    expect(mappings[0].locale).toBe('de')
+  })
+
   it('uses custom defaultNamespace', async () => {
     mockStore.mockResolvedValue(['en'])
 
