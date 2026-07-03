@@ -120,11 +120,11 @@ describe('exportTranslations', () => {
 
     await exportTranslations({ outputDir: tmpDir })
 
+    // The base file holds only root translations; namespaced keys are excluded
+    // and written to their own file instead (no duplication).
     const enBase = JSON.parse(readFileSync(join(tmpDir, 'en', 'base.json'), 'utf-8'))
     expect(enBase).toEqual({
       greeting: 'Hello',
-      'counter.count': 'Count: {count:number}',
-      'counter.increment': 'Increment',
     })
 
     const enCounter = JSON.parse(readFileSync(join(tmpDir, 'en', 'counter.json'), 'utf-8'))
@@ -132,6 +132,25 @@ describe('exportTranslations', () => {
       count: 'Count: {count:number}',
       increment: 'Increment',
     })
+  })
+
+  it('does not duplicate namespace keys into the base file', async () => {
+    mockReadTranslations.mockResolvedValue([
+      {
+        locale: 'en',
+        translations: {
+          greeting: 'Hello',
+          counter: { count: 'Count', increment: 'Increment' },
+          features: { title: 'Features' },
+        },
+        namespaces: ['counter', 'features'],
+      },
+    ])
+
+    await exportTranslations({ outputDir: tmpDir })
+
+    const enBase = JSON.parse(readFileSync(join(tmpDir, 'en', 'base.json'), 'utf-8'))
+    expect(Object.keys(enBase)).toEqual(['greeting'])
   })
 
   it('uses custom defaultNamespace for the root file', async () => {
@@ -169,10 +188,6 @@ describe('exportTranslations', () => {
     const enBase = JSON.parse(readFileSync(join(tmpDir, 'en', 'base.json'), 'utf-8'))
     expect(enBase).toEqual({
       greeting: 'Hello',
-      counter: {
-        count: 'Count: {count:number}',
-        increment: 'Increment',
-      },
     })
 
     const enCounter = JSON.parse(readFileSync(join(tmpDir, 'en', 'counter.json'), 'utf-8'))

@@ -24,7 +24,17 @@ export const exportTranslations = async (options?: ExportOptions) => {
     const localeDir = join(outputDir, locale)
     mkdirSync(localeDir, { recursive: true })
 
-    writeJsonFile(join(localeDir, `${defaultNamespace}.json`), translations, flatten)
+    // `translations` holds the root/shared strings plus every namespace nested
+    // inside it. The default-namespace file is meant for root translations only
+    // (see README "File structure"), so strip the namespace keys before writing
+    // it — otherwise every namespaced string is duplicated into the default file
+    // and re-uploaded to SimpleLocalize under the default namespace.
+    const rootTranslations = { ...(translations as Record<string, unknown>) }
+    for (const ns of namespaces) {
+      delete rootTranslations[ns]
+    }
+
+    writeJsonFile(join(localeDir, `${defaultNamespace}.json`), rootTranslations, flatten)
     console.log(`exported '${locale}/${defaultNamespace}.json'`)
 
     for (const ns of namespaces) {
