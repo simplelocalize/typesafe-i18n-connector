@@ -153,11 +153,11 @@ await exportTranslations({
 })
 ```
 
-| Option             | Type      | Default          | Description                                                                                                       |
-| ------------------ | --------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to                                                                         |
-| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting                                                                          |
-| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations                                                            |
+| Option             | Type      | Default          | Description                                                                                                              |
+| ------------------ | --------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to                                                                                |
+| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting                                                                                 |
+| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations                                                                   |
 | `flatten`          | `boolean` | `true`           | Flatten nested keys with dots (e.g. `section.title`). Set to `false` to write nested JSON mirroring the source structure |
 
 ### Import options
@@ -171,10 +171,10 @@ await importTranslations({
 })
 ```
 
-| Option             | Type     | Default          | Description                                                                                                                                 |
-| ------------------ | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                                                                                                           |
-| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations                                                                                      |
+| Option             | Type     | Default          | Description                                                                                                                                   |
+| ------------------ | -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                                                                                                             |
+| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations                                                                                        |
 | `baseLocale`       | `string` | `en`             | Locale processed first. Must match your typesafe-i18n base locale — other locales would otherwise have their namespace files silently skipped |
 
 ## License
