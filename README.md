@@ -14,7 +14,7 @@ npm install @simplelocalize/typesafe-i18n-connector
 
 ### Export translations
 
-Reads typesafe-i18n translation files from disk, flattens them into flat key-value JSON files, and writes them to the output directory.
+Reads typesafe-i18n translation files from disk, flattens them into flat key-value JSON files (or keeps the nested structure with `flatten: false`), and writes them to the output directory.
 
 ```ts
 import { exportTranslations } from '@simplelocalize/typesafe-i18n-connector'
@@ -153,11 +153,12 @@ await exportTranslations({
 })
 ```
 
-| Option             | Type      | Default          | Description                                            |
-| ------------------ | --------- | ---------------- | ------------------------------------------------------ |
-| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to              |
-| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting               |
-| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations |
+| Option             | Type      | Default          | Description                                                                                                       |
+| ------------------ | --------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `outputDir`        | `string`  | `./locales-json` | Directory to write exported JSON files to                                                                         |
+| `cleanOutputDir`   | `boolean` | `true`           | Remove output directory before exporting                                                                          |
+| `defaultNamespace` | `string`  | `base`           | Filename (without `.json`) for root-level translations                                                            |
+| `flatten`          | `boolean` | `true`           | Flatten nested keys with dots (e.g. `section.title`). Set to `false` to write nested JSON mirroring the source structure |
 
 ### Import options
 
@@ -170,10 +171,11 @@ await importTranslations({
 })
 ```
 
-| Option             | Type     | Default          | Description                                            |
-| ------------------ | -------- | ---------------- | ------------------------------------------------------ |
-| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                      |
-| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations |
+| Option             | Type     | Default          | Description                                                                                                                                 |
+| ------------------ | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `inputDir`         | `string` | `./locales-json` | Directory to read JSON files from                                                                                                           |
+| `defaultNamespace` | `string` | `base`           | Filename (without `.json`) for root-level translations                                                                                      |
+| `baseLocale`       | `string` | `en`             | Locale processed first. Must match your typesafe-i18n base locale — other locales would otherwise have their namespace files silently skipped |
 
 ## License
 
