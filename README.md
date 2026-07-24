@@ -96,7 +96,7 @@ uploadLanguageKey: en
 uploadFormat: single-language-json
 uploadPath: ./locales-json/en/{ns}.json
 uploadOptions:
-  - REPLACE_TRANSLATION_IF_FOUND
+  - UPDATE_TRANSLATIONS
   - ACTIVATE_PRESENT_KEYS
   - DEPRECATE_NOT_PRESENT_KEYS
   - MARK_AS_ACCEPTED
